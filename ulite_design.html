@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -75,7 +75,10 @@
             justify-content: space-between;
         }
 
-        nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
+        /* Desktop Hover State */
+        @media screen and (min-width: 769px) {
+            nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
+        }
         
         .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
         .mm-column ul li { margin-bottom: 8px; color: #555; font-size: 0.85rem; }
@@ -88,8 +91,10 @@
             text-decoration: underline; 
         }
 
-        /* --- BLUR EFFECT (Desktop Default) --- */
-        body:has(header:hover) .main-wrapper {
+        /* --- BLUR EFFECT --- */
+        /* Applied when header is hovered OR when a mobile menu is active */
+        body:has(header:hover) .main-wrapper,
+        body:has(.mobile-active) .main-wrapper {
             filter: blur(8px);
             opacity: 0.8;
             transition: all 0.3s ease;
@@ -338,12 +343,6 @@
         /* --- MOBILE RESPONSIVENESS (MEDIA QUERIES) --- */
         @media screen and (max-width: 768px) {
             
-            /* DISABLE BLUR EFFECT ON MOBILE */
-            body:has(header:hover) .main-wrapper {
-                filter: none;
-                opacity: 1;
-            }
-
             /* Unstick header and stack logo/nav */
             header {
                 position: relative;
@@ -378,7 +377,12 @@
                 flex-direction: column;
                 gap: 20px;
             }
-            nav > ul > li:hover .mega-menu {
+            
+            /* Hide hover on mobile to prevent sticky states */
+            nav > ul > li:hover .mega-menu { display: none; }
+            
+            /* Show ONLY when the .mobile-active class is added via JS */
+            nav > ul > li.mobile-active .mega-menu {
                 display: flex;
             }
 
@@ -429,6 +433,20 @@
         }
 
     </style>
+    <script>
+        function toggleMobileMenu(event) {
+            // Check if screen is mobile size (matches CSS breakpoint)
+            if (window.innerWidth <= 768) {
+                event.preventDefault(); // Prevent link navigation
+                
+                // Find the parent LI
+                const listItem = event.target.closest('li');
+                
+                // Toggle the active class
+                listItem.classList.toggle('mobile-active');
+            }
+        }
+    </script>
 </head>
 <body>
 
@@ -440,7 +458,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#">Ceiling</a>
+                    <a href="#" onclick="toggleMobileMenu(event)">Ceiling</a>
                     <div class="mega-menu">
                         <div class="mm-column">
                             <h4>Suspended</h4>
@@ -543,7 +561,7 @@
                         <li>Logistics</li>
                         <li>Ordering</li>
                         <li>Project reporting</li>
-                        <li class="turq-item">Technical Support</li>
+                        <li>Technical Support</li>
                         <li>Project close-out</li>
                     </ul>
                 </div>
