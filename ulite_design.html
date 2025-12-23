@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulite Design</title>
+    <style>
+        /* --- RESET & TYPOGRAPHY --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: #000; 
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px; 
+            background: #fff;
+            z-index: 1000;
+            padding: 0 50px;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .logo { 
+            position: absolute; 
+            left: 50px;
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        nav > ul { display: flex; gap: 40px; }
+        nav > ul > li { position: relative; }
+        nav > ul > li > a { 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            text-transform: capitalize; 
+            padding: 28px 0; 
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu {
+            display: none;
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%); 
+            background: #fff;
+            padding: 30px 50px;
+            width: auto;
+            min-width: 600px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-top: 1px solid #eee;
+            z-index: 999;
+            justify-content: space-between;
+        }
+
+        nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
+        
+        .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
+        .mm-column ul li { margin-bottom: 8px; color: #555; font-size: 0.85rem; }
+        .mm-column ul li:hover { color: #000; cursor: pointer; }
+        .mm-link-all { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-decoration: underline; 
+        }
+
+        /* --- BLUR EFFECT --- */
+        body:has(header:hover) .main-wrapper {
+            filter: blur(8px);
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        .main-wrapper { transition: all 0.3s ease; padding-top: 80px; }
+
+        /* --- BREADCRUMB --- */
+        .page-breadcrumb {
+            padding: 20px 50px; 
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- HERO BANNER SECTION --- */
+        .hero-banner-section {
+            width: 100%;
+            background-color: #000; 
+            padding: 30px 20px; 
+            position: relative;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 60px;
+        }
+
+        .hero-banner-inner {
+            max-width: 900px; 
+            margin: 0 auto;
+            position: relative; 
+        }
+
+        .hero-banner-img {
+            display: block;
+            max-width: 100%;
+            max-height: 350px; 
+            width: auto;
+            margin: 0 auto;
+            opacity: 0.7; 
+        }
+
+        .hero-overlay-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .overlay-title {
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .overlay-subtitle {
+            font-size: 1.2rem; 
+            font-weight: 300;
+        }
+
+        /* --- ADVANTAGE TEXT SECTION --- */
+        .advantage-text-section {
+            padding: 0 50px 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .advantage-title { 
+            font-size: 1.5rem; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: #00CED1; /* Turquoise */
+        }
+        .advantage-text { font-size: 1.1rem; color: #333; margin-bottom: 15px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .advantage-desc { color: #555; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; }
+
+
+        /* --- SERVICES GRID --- */
+        .services-section {
+            padding: 40px 50px;
+            background: #fff;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Updated Grid Layout: Shifted Right */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            font-size: 0.9rem;
+            color: #444;
+            max-width: 900px; /* Increased slightly */
+            margin: 0 auto;   /* Center the grid */
+            padding-left: 60px; /* Adds the rightward shift */
+        }
+        
+        .service-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .service-header {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #00CED1; /* Turquoise Main Header */
+            margin-bottom: 5px;
+        }
+
+        .service-list li { margin-bottom: 8px; }
+        
+        /* Specific styling for Technical Support item */
+        .turq-item {
+            color: #00CED1;
+            font-weight: 700;
+        }
+
+        /* --- COLORFUL HERO --- */
+        .colorful-section {
+            padding: 50px 50px 80px 50px; 
+            text-align: center;
+            background: #f9f9f9; 
+            margin-top: 0; 
+            margin-bottom: 40px;
+        }
+        
+        .colorful-title { 
+            font-size: 3.5rem; 
+            font-weight: 300; 
+            margin-bottom: 30px; 
+            background: linear-gradient(to right, #005c00, #00ff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .colorful-word { font-weight: 700; }
+
+        .colorful-sub { 
+            font-size: 1.2rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            background: linear-gradient(to right, #1cb5e0, #000851);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        
+        .colorful-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+        .colorful-icons img {
+            height: 60px; 
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        .colorful-icons img:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- CTA ELEMENTS --- */
+        .cta-container {
+            margin-top: 60px; 
+        }
+        .cta-text { font-size: 1.1rem; margin-bottom: 30px; }
+        .cta-btn {
+            background: #000;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fff;
+            padding: 60px 50px 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+        }
+        .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .f-col h5 { font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; }
+        
+        .footer-logo {
+            display: block;
+            height: 30px; 
+            width: auto;
+            margin-bottom: 15px; 
+        }
+
+        .icon-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 10px; 
+            color: #555; 
+            line-height: 1.5; 
+            text-decoration: none; 
+        }
+        .icon-row:hover { color: #000; }
+
+        .icon-row img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        
+
+
+        .f-col p { display: block; margin-bottom: 10px; color: #555; line-height: 1.5; }
+        .f-col a:not(.icon-row) { display: block; margin-bottom: 10px; color: #555; }
+        .f-col a:not(.icon-row):hover { color: #000; }
+
+        .copyright {
+            text-align: left;
+            color: #999;
+            font-size: 0.75rem;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="1.png" alt="Ulite Logo"> 
+            Ulite Design
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#">Ceiling</a>
+                    <div class="mega-menu">
+                        <div class="mm-column">
+                            <h4>Suspended</h4>
+                            <ul>
+                                <li>Track Head</li>
+                                <li>Cylinder</li>
+                                <li>Linear</li>
+                                <li>Acoustic</li>
+                                <li>Decorative Pendant</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Suspended</a>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Recessed</h4>
+                            <ul>
+                                <li>Round Downlight</li>
+                                <li>Square Downlight</li>
+                                <li>Trimless Downlight</li>
+                                <li>Magnetic Track</li>
+                                <li>Linear</li>
+                                <li>Troffer</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Recessed</a>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Surface</h4>
+                            <ul>
+                                <li>Track Head</li>
+                                <li>Cylinder</li>
+                                <li>Trimless Downlight</li>
+                                <li>Linear</li>
+                                <li>Magnetic Track</li>
+                                <li>Panel</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Surface</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Wall</a></li>
+                <li><a href="#">Ground</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        
+        <div class="page-breadcrumb">
+            Support > About Us
+        </div>
+
+        <section class="hero-banner-section">
+            <div class="hero-banner-inner">
+                <img src="0.png" alt="Exploded View Lighting Fixture" class="hero-banner-img">
+                <div class="hero-overlay-content">
+                    <h2 class="overlay-title">Lighting Supply.</h2>
+                    <p class="overlay-subtitle">Value Added. On budget. On time.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantage-text-section">
+            <h2 class="advantage-title">The Ulite Advantage</h2>
+            <p class="advantage-text">Ulite Design is not just a vendor; we don't simply make a sale and walk away.</p>
+            <p class="advantage-desc">
+                We care about every concern regarding your lighting projects. We serve small to medium-sized companies 
+                and are built to offer lighting packages with affordable design services.
+            </p>
+        </section>
+
+        <section class="services-section">
+            <div class="services-grid">
+                
+                <div class="service-col">
+                    <div class="service-header">Planning + Strategy</div>
+                    <ul class="service-list">
+                        <li>Specification review</li>
+                        <li>Budget consultation</li>
+                        <li>Application mockups</li>
+                        <li>Energy consultation</li>
+                        <li>Inventory management</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Estimating</div>
+                    <ul class="service-list">
+                        <li>Take-offs</li>
+                        <li>Plan review/RFIs</li>
+                        <li>Quotation</li>
+                        <li>Value-engineering</li>
+                        <li>Submittals</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Management</div>
+                    <ul class="service-list">
+                        <li>Logistics</li>
+                        <li>Ordering</li>
+                        <li>Project reporting</li>
+                        <li class="turq-item">Technical Support</li>
+                        <li>Project close-out</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="colorful-section">
+            <div class="colorful-title">Life Could Be <span class="colorful-word">Colorful</span></div>
+            
+            <div class="colorful-icons">
+                <img src="1.png" alt="Ulite Yellow">
+                <img src="5.png" alt="Ulite Orange">
+                <img src="31.png" alt="Ulite Green">
+                <img src="4.png" alt="Ulite Blue">
+            </div>
+
+            <div class="colorful-sub">You Define It, We Make It Reality</div>
+
+            <div class="cta-container">
+                <p class="cta-text">This is just a brief overview of what we do. We'd love to hear from you.</p>
+                <button class="cta-btn">Contact us</button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-cols">
+                <div class="f-col">
+                    <img src="1.png" alt="Ulite Footer Logo" class="footer-logo">
+                    <h5>About Us</h5>
+                    <p>We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.</p>
+                </div>
+                                <div class="f-col">
+                    <h5>Follow</h5>
+                    <a href="#" class="icon-row"><img src="10.jpg" alt="Instagram Logo" class="ig-logo"> Instagram</a>
+                    <a href="#" class="icon-row"><img src="7.png" alt="LinkedIn Logo"> LinkedIn</a>
+                    <a href="#" class="icon-row"><img src="8.png" alt="Facebook Logo"> Facebook</a>
+                    <a href="#" class="icon-row"><img src="9.png" alt="Pinterest Logo"> Pinterest</a>
+                    <a href="#" class="icon-row"><img src="11.jpg" alt="TikTok Logo"> TikTok</a>
+                </div>
+                <div class="f-col">
+                    <h5>Support</h5>
+                    <a href="#">Warranty</a>
+                    <a href="#">Business Terms</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">Lighting FAQ</a>
+                </div>
+
+                <div class="f-col">
+                    <h5>Contact</h5>
+                    <div class="icon-row">
+                        <img src="2.png" alt="Location Pin">
+                        <span>The Hills, TX 78738</span>
+                    </div>
+                    <div class="icon-row">
+                        <img src="3.png" alt="Phone Icon">
+                        <span>512-596-7310</span>
+                    </div>
+                    <a href="mailto:support@ulitedesign.com" class="icon-row">
+                        <img src="6.png" alt="Email Icon">
+                        <span>support@ulitedesign.com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                United States Copyright © 2025 Ulite Design, LLC All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>
