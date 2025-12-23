@@ -55,7 +55,7 @@
             font-size: 0.9rem; 
             text-transform: capitalize; 
             padding: 28px 0; 
-            display: block; /* Ensure full click area */
+            display: block; 
         }
 
         /* --- MEGA MENU --- */
@@ -75,7 +75,6 @@
             justify-content: space-between;
         }
 
-        /* Hover state for desktop */
         nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
         
         .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
@@ -89,7 +88,7 @@
             text-decoration: underline; 
         }
 
-        /* --- BLUR EFFECT --- */
+        /* --- BLUR EFFECT (Desktop Default) --- */
         body:has(header:hover) .main-wrapper {
             filter: blur(8px);
             opacity: 0.8;
@@ -339,6 +338,12 @@
         /* --- MOBILE RESPONSIVENESS (MEDIA QUERIES) --- */
         @media screen and (max-width: 768px) {
             
+            /* DISABLE BLUR EFFECT ON MOBILE */
+            body:has(header:hover) .main-wrapper {
+                filter: none;
+                opacity: 1;
+            }
+
             /* Unstick header and stack logo/nav */
             header {
                 position: relative;
@@ -360,7 +365,6 @@
             }
 
             /* --- DROPDOWN FIX FOR MOBILE --- */
-            /* 1. Make the menu static (stacking inside the flow) */
             .mega-menu {
                 position: static;
                 transform: none;
@@ -369,18 +373,15 @@
                 box-shadow: none;
                 border-top: none;
                 padding: 10px 0;
-                background: #f9f9f9; /* Slight contrast so we know it's a submenu */
+                background: #f9f9f9; 
                 margin-top: 10px;
                 flex-direction: column;
                 gap: 20px;
             }
-
-            /* 2. Force it to show when the parent is "hovered" (tapped) */
             nav > ul > li:hover .mega-menu {
                 display: flex;
             }
 
-            /* 3. Center align the submenu items */
             .mm-column {
                 text-align: center;
                 border-bottom: 1px solid #eee;
@@ -399,12 +400,12 @@
             /* Stack Services Grid & Center */
             .services-grid {
                 grid-template-columns: 1fr; /* 1 Column */
-                padding-left: 0; /* Remove desktop offset */
+                padding-left: 0; 
                 text-align: center;
                 padding: 0 20px;
             }
             .service-col {
-                align-items: center; /* Center align items */
+                align-items: center; 
             }
 
             /* Adjust Colorful Section */
@@ -417,14 +418,13 @@
                 text-align: center;
             }
             .f-col {
-                align-items: center; /* Center align flex items in footer */
+                align-items: center;
                 display: flex;
                 flex-direction: column;
             }
             .footer-logo { margin: 0 auto 15px auto; }
             .copyright { text-align: center; }
             
-            /* Breadcrumb alignment */
             .page-breadcrumb { text-align: center; }
         }
 
@@ -543,7 +543,7 @@
                         <li>Logistics</li>
                         <li>Ordering</li>
                         <li>Project reporting</li>
-                        <li>Technical Support</li>
+                        <li class="turq-item">Technical Support</li>
                         <li>Project close-out</li>
                     </ul>
                 </div>
