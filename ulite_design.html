@@ -165,7 +165,7 @@
             font-size: 1.5rem; 
             font-weight: 700; 
             margin-bottom: 20px; 
-            color: #00CED1; /* Turquoise */
+            color: #00CED1; 
         }
         .advantage-text { font-size: 1.1rem; color: #333; margin-bottom: 15px; max-width: 800px; margin-left: auto; margin-right: auto; }
         .advantage-desc { color: #555; line-height: 1.6; max-width: 800px; margin-left: auto; margin-right: auto; }
@@ -179,16 +179,15 @@
             margin: 0 auto;
         }
         
-        /* Updated Grid Layout: Shifted Right */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
             gap: 20px; 
             font-size: 0.9rem;
             color: #444;
-            max-width: 900px; /* Increased slightly */
-            margin: 0 auto;   /* Center the grid */
-            padding-left: 60px; /* Adds the rightward shift */
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 60px; 
         }
         
         .service-col {
@@ -200,13 +199,12 @@
         .service-header {
             font-weight: 700;
             font-size: 1rem;
-            color: #00CED1; /* Turquoise Main Header */
+            color: #00CED1; 
             margin-bottom: 5px;
         }
 
         .service-list li { margin-bottom: 8px; }
         
-        /* Specific styling for Technical Support item */
         .turq-item {
             color: #00CED1;
             font-weight: 700;
@@ -317,7 +315,10 @@
             object-fit: contain;
         }
         
-
+        .icon-row img.ig-logo {
+            width: 30px; 
+            height: 30px;
+        }
 
         .f-col p { display: block; margin-bottom: 10px; color: #555; line-height: 1.5; }
         .f-col a:not(.icon-row) { display: block; margin-bottom: 10px; color: #555; }
@@ -332,6 +333,72 @@
             max-width: 1400px;
             margin: 0 auto;
         }
+
+        /* --- MOBILE RESPONSIVENESS (MEDIA QUERIES) --- */
+        @media screen and (max-width: 768px) {
+            
+            /* Unstick header and stack logo/nav */
+            header {
+                position: relative;
+                height: auto;
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            .logo {
+                position: static;
+                margin-bottom: 15px;
+            }
+            nav > ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            .main-wrapper {
+                padding-top: 0;
+            }
+
+            /* Disable mega menu hover on mobile to prevent breakage */
+            nav > ul > li:hover .mega-menu { display: none; }
+
+            /* Adjust Hero */
+            .hero-banner-section {
+                padding: 20px 10px;
+            }
+            .overlay-title { font-size: 1.8rem; }
+            .overlay-subtitle { font-size: 1rem; }
+
+            /* Stack Services Grid & Center */
+            .services-grid {
+                grid-template-columns: 1fr; /* 1 Column */
+                padding-left: 0; /* Remove desktop offset */
+                text-align: center;
+                padding: 0 20px;
+            }
+            .service-col {
+                align-items: center; /* Center align items */
+            }
+
+            /* Adjust Colorful Section */
+            .colorful-title { font-size: 2.2rem; }
+            .colorful-icons { flex-wrap: wrap; gap: 20px; }
+
+            /* Stack Footer */
+            .footer-cols {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .f-col {
+                align-items: center; /* Center align flex items in footer */
+                display: flex;
+                flex-direction: column;
+            }
+            .footer-logo { margin: 0 auto 15px auto; }
+            .copyright { text-align: center; }
+            
+            /* Breadcrumb alignment */
+            .page-breadcrumb { text-align: center; }
+        }
+
     </style>
 </head>
 <body>
@@ -447,7 +514,7 @@
                         <li>Logistics</li>
                         <li>Ordering</li>
                         <li>Project reporting</li>
-                        <li>Technical Support</li>
+                        <li class="turq-item">Technical Support</li>
                         <li>Project close-out</li>
                     </ul>
                 </div>
@@ -480,14 +547,6 @@
                     <h5>About Us</h5>
                     <p>We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.</p>
                 </div>
-                                <div class="f-col">
-                    <h5>Follow</h5>
-                    <a href="#" class="icon-row"><img src="10.jpg" alt="Instagram Logo" class="ig-logo"> Instagram</a>
-                    <a href="#" class="icon-row"><img src="7.png" alt="LinkedIn Logo"> LinkedIn</a>
-                    <a href="#" class="icon-row"><img src="8.png" alt="Facebook Logo"> Facebook</a>
-                    <a href="#" class="icon-row"><img src="9.png" alt="Pinterest Logo"> Pinterest</a>
-                    <a href="#" class="icon-row"><img src="11.jpg" alt="TikTok Logo"> TikTok</a>
-                </div>
                 <div class="f-col">
                     <h5>Support</h5>
                     <a href="#">Warranty</a>
@@ -496,7 +555,14 @@
                     <a href="#">Returns & Exchanges</a>
                     <a href="#">Lighting FAQ</a>
                 </div>
-
+                <div class="f-col">
+                    <h5>Follow</h5>
+                    <a href="#" class="icon-row"><img src="10.jpg" alt="Instagram Logo" class="ig-logo"> Instagram</a>
+                    <a href="#" class="icon-row"><img src="7.png" alt="LinkedIn Logo"> LinkedIn</a>
+                    <a href="#" class="icon-row"><img src="8.png" alt="Facebook Logo"> Facebook</a>
+                    <a href="#" class="icon-row"><img src="9.png" alt="Pinterest Logo"> Pinterest</a>
+                    <a href="#" class="icon-row"><img src="11.jpg" alt="TikTok Logo"> TikTok</a>
+                </div>
                 <div class="f-col">
                     <h5>Contact</h5>
                     <div class="icon-row">
@@ -521,5 +587,4 @@
     </div>
 
 </body>
-
 </html>
