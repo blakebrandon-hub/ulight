@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -92,7 +92,7 @@
         }
 
         /* --- BLUR EFFECT --- */
-        /* Applied when header is hovered OR when a mobile menu is active */
+        /* Applied globally, but overridden in mobile query below */
         body:has(header:hover) .main-wrapper,
         body:has(.mobile-active) .main-wrapper {
             filter: blur(8px);
@@ -340,15 +340,41 @@
             margin: 0 auto;
         }
 
-        /* --- MOBILE RESPONSIVENESS (MEDIA QUERIES) --- */
+        /* --- RESPONSIVE FIXES --- */
+
+        /* 1. TABLET / LANDSCAPE MOBILE (Prevent overlap) */
+        @media screen and (max-width: 1200px) {
+            header {
+                justify-content: space-between; /* Spread Logo and Nav apart */
+                padding: 0 30px;
+            }
+            .logo {
+                position: static; /* Remove absolute positioning */
+                margin: 0;
+            }
+            nav > ul {
+                gap: 20px; /* Reduce gap to fit better */
+            }
+        }
+
+        /* 2. PORTRAIT MOBILE */
         @media screen and (max-width: 768px) {
             
+            /* REMOVE BLUR FOR MOBILE */
+            body:has(header:hover) .main-wrapper,
+            body:has(.mobile-active) .main-wrapper {
+                filter: none !important;
+                opacity: 1 !important;
+            }
+
             /* Unstick header and stack logo/nav */
             header {
                 position: relative;
                 height: auto;
                 flex-direction: column;
                 padding: 15px 20px;
+                /* Reset justify-content from the table query */
+                justify-content: center; 
             }
             .logo {
                 position: static;
@@ -378,10 +404,8 @@
                 gap: 20px;
             }
             
-            /* Hide hover on mobile to prevent sticky states */
             nav > ul > li:hover .mega-menu { display: none; }
             
-            /* Show ONLY when the .mobile-active class is added via JS */
             nav > ul > li.mobile-active .mega-menu {
                 display: flex;
             }
@@ -403,7 +427,7 @@
 
             /* Stack Services Grid & Center */
             .services-grid {
-                grid-template-columns: 1fr; /* 1 Column */
+                grid-template-columns: 1fr; 
                 padding-left: 0; 
                 text-align: center;
                 padding: 0 20px;
