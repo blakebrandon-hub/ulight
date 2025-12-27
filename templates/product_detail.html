@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super 3inch Adjustable - Ulite Design</title>
+    <style>
+        /* --- RESET & TYPOGRAPHY (Matches Homepage) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: #000; 
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER & NAV (Matches Homepage) --- */
+        header {
+            position: fixed; top: 0; width: 100%; height: 80px; 
+            background: #f1f1f1; z-index: 1000; padding: 0 20px;
+            display: flex; justify-content: center; align-items: center; gap: 8vw; 
+        }
+        .logo { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .logo img { height: 40px; width: auto; }
+        nav { display: flex; align-items: center; }
+        nav > ul { display: flex; gap: 8vw; align-items: center; } 
+        nav > ul > li > a { font-weight: 600; font-size: 0.9rem; padding: 28px 0; display: block; }
+        
+        .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+        .mobile-menu-btn span { width: 25px; height: 3px; background-color: #000; }
+
+        .main-wrapper { transition: all 0.3s ease; padding-top: 80px; }
+
+        /* --- BREADCRUMB --- */
+        .page-breadcrumb {
+            padding: 40px 50px 20px 50px; 
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- PRODUCT LAYOUT --- */
+        .category-layout {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 50px 80px 50px;
+            gap: 60px;
+            align-items: flex-start;
+        }
+
+        /* Sidebar (Matches Categories) */
+        .sidebar {
+            width: 200px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 100px;
+        }
+        .sidebar-menu li { margin-bottom: 20px; }
+        .sidebar-menu a {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #999; 
+            transition: color 0.3s;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active { color: #000; }
+
+        /* --- PRODUCT DETAIL CONTENT --- */
+        .product-detail-container {
+            flex-grow: 1;
+        }
+
+        .product-top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        /* Product Image Area */
+        .main-product-image {
+            width: 100%;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .main-product-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        /* Product Info Area */
+        .product-info-col h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .info-tabs {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-link {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #00CED1; /* Cyan color from PDF */
+            padding-bottom: 10px;
+            cursor: pointer;
+            border-bottom: 2px solid #00CED1;
+        }
+        .tab-link.inactive {
+            color: #999;
+            border-bottom: 2px solid transparent;
+        }
+
+        .description-text {
+            font-size: 0.95rem;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .feature-list {
+            list-style: disc;
+            padding-left: 20px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        /* Accordions  */
+        .download-accordion {
+            border: 1px solid #000;
+            margin-bottom: 15px;
+            background: #fff;
+        }
+        .accordion-header {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+        .accordion-header:hover {
+            background: #f9f9f9;
+        }
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        .accordion-content {
+            display: none;
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            color: #666;
+        }
+        .accordion-content.open {
+            display: block;
+        }
+        .accordion-header.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        /* --- RELATED PRODUCTS --- */
+        .related-section {
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+        .related-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .related-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .related-img {
+            background: #f4f4f4;
+            width: 100%;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .related-img img { max-width: 60%; mix-blend-mode: multiply; }
+
+        /* --- FOOTER (Matches Homepage) --- */
+        footer { background: #fff; padding: 60px 50px 20px; border-top: 1px solid #eee; margin-top: 40px; }
+        .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto 60px; }
+        .f-col h5 { font-weight: 700; margin-bottom: 20px; }
+        .f-col a, .f-col p { display: block; margin-bottom: 10px; color: #555; }
+        .copyright { text-align: left; color: #999; font-size: 0.75rem; padding-top: 20px; border-top: 1px solid #f0f0f0; max-width: 1400px; margin: 0 auto; }
+        .footer-logo { display: block; height: 30px; width: auto; margin-bottom: 15px; }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .category-layout { flex-direction: column; padding: 20px 30px; }
+            .sidebar { width: 100%; display: flex; gap: 20px; overflow-x: auto; position: static; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+            .product-top-section { grid-template-columns: 1fr; }
+            .related-grid { grid-template-columns: repeat(2, 1fr); }
+            header { justify-content: space-between; gap: 0; padding: 0 30px; }
+            nav { display: none; }
+        }
+        @media (max-width: 600px) {
+            .related-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="{{ url_for('home') }}"><div class="logo"><img src="1.png" alt="Ulite Logo" href="/"></div></a>
+        <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
+        <nav>
+            <ul>
+                <li><a href="#">Ceiling</a></li>
+                <li><a href="#">Wall</a></li>
+                <li><a href="#">Ground</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        
+        <div class="page-breadcrumb">
+            Ceiling > Round Downlight > Super 3inch Adjustable
+        </div>
+
+        <div class="category-layout">
+            
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active">Ceiling</a></li>
+                    <li><a href="#">Wall</a></li>
+                    <li><a href="#">Ground</a></li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </aside>
+
+            <main class="product-detail-container">
+                
+                <div class="product-top-section">
+                    <div class="main-product-image">
+                        <img src="https://placehold.co/500x500/e0e0e0/333?text=Super+3+Adjustable" alt="Super 3inch Adjustable">
+                    </div>
+
+                    <div class="product-info-col">
+                        <h1>Super 3inch Adjustable</h1>
+
+                        <div class="info-tabs">
+                            <span class="tab-link">FEATURES</span>
+                            <span class="tab-link inactive">SPECIFICATIONS</span>
+                        </div>
+
+                        <div class="description-text">
+                            Small and powerful runs in this family of 3" aperture recessed downlight that offer up to 1700 delivered lumens.<br><br>
+                            This mini downlight family is complete with high performance and an expansive range of options for optics, trim styles, trim configurations, beam spreads, housings, mounting, and more offering the flexibility your projects require.<br><br>
+                            Architectural Friendly: Up to 50,000 unique combinations.
+                        </div>
+
+                        <ul class="feature-list">
+                            <li>Adjustable Ring: 360° rotation and a maximum 30° tilt angle</li>
+                            <li>2 in 1 Dimming: 0-10V (Dim to 1%) and TRIAC in one package</li>
+                            <li>COB LED: 4 Fixed CCT 90+ CRI or Dim to Warm 95+ CRI options</li>
+                            <li>Beam Angle: 4 optics series with 15°~60° options</li>
+                            <li>Trimmed, trimless with various shades options</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="downloads-section">
+                    
+                    <div class="download-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>SPECSHEET</span>
+                            <span class="accordion-icon">&#8964;</span>
+                        </div>
+                        <div class="accordion-content">
+                            <a href="#">Download Super 3inch Adjustable Specsheet (PDF)</a>
+                        </div>
+                    </div>
+
+                    <div class="download-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>INSTALLATION INSTRUCTION</span>
+                            <span class="accordion-icon">&#8964;</span>
+                        </div>
+                        <div class="accordion-content">
+                            <a href="#">Download Installation Manual (PDF)</a>
+                        </div>
+                    </div>
+
+                    <div class="download-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>IES FILES</span>
+                            <span class="accordion-icon">&#8964;</span>
+                        </div>
+                        <div class="accordion-content">
+                            <a href="#">Download IES Files (ZIP)</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="related-section">
+                    <h2 class="related-title">You Might Want To Know More</h2>
+                    <div class="related-grid">
+                        <div class="related-card">
+                            <div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 1"></div>
+                        </div>
+                        <div class="related-card">
+                            <div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 2"></div>
+                        </div>
+                        <div class="related-card">
+                            <div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 3"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <footer>
+            <div class="footer-cols">
+                <div class="f-col">
+                    <img src="1.png" alt="Footer Logo" class="footer-logo">
+                    <h5>About Us</h5>
+                    <p>We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.</p>
+                </div>
+                <div class="f-col">
+                    <h5>Follow</h5>
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Pinterest</a>
+                    <a href="#">TikTok</a>
+                </div>
+                <div class="f-col">
+                    <h5>Support</h5>
+                    <a href="#">Warranty</a>
+                    <a href="#">Business Terms</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">Lighting FAQ</a>
+                </div>
+                <div class="f-col">
+                    <h5>Contact</h5>
+                    <p>The Hills, TX 78738</p>
+                    <p>512-596-7310</p>
+                    <a href="mailto:support@ulitedesign.com">support@ulitedesign.com</a>
+                </div>
+            </div>
+            <div class="copyright">
+                United States Copyright © 2025 Ulite Design, LLC All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleAccordion(element) {
+            element.classList.toggle('active');
+            var content = element.nextElementSibling;
+            content.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulite Design</title>
+    <style>
+        /* --- RESET & TYPOGRAPHY --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            color: #000; 
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* --- HEADER & NAV --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px; 
+            background: #f1f1f1;
+            z-index: 1000;
+            padding: 0 20px;
+            display: flex;
+            
+            /* DESKTOP LAYOUT: CENTER EVERYTHING & USE GAPS */
+            justify-content: center; 
+            align-items: center;
+            
+            /* This Gap handles the space between the LOGO and the first menu item */
+            gap: 8vw; 
+        }
+        
+        .logo { 
+            font-weight: 700; 
+            font-size: 1.2rem; 
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1001; 
+            
+            /* REMOVED ABSOLUTE POSITIONING so it flows with the text */
+            position: static;
+            transform: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        /* Desktop Nav Styles */
+        nav { display: flex; align-items: center; }
+        
+        /* This Gap handles the space between the menu items (Ceiling <-> Wall) */
+        /* It matches the header gap so the Logo <-> Ceiling gap looks identical */
+        nav > ul { display: flex; gap: 8vw; align-items: center; } 
+        
+        nav > ul > li { position: relative; }
+        nav > ul > li > a { 
+            font-weight: 600; 
+            font-size: 0.9rem; 
+            text-transform: capitalize; 
+            padding: 28px 0; 
+            display: block;
+        }
+
+        /* Mobile Menu Toggle (Hidden on Desktop) */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1002;
+        }
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background-color: #000;
+            transition: 0.3s;
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu {
+            display: none; 
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%); 
+            background: #fff;
+            padding: 30px 50px;
+            width: auto;
+            min-width: 600px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-top: 1px solid #eee;
+            z-index: 999;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 992px) {
+            nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
+            
+            body:has(header:hover) .main-wrapper {
+                filter: blur(8px);
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+        }
+        
+        .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
+        .mm-column ul li { margin-bottom: 8px; color: #555; font-size: 0.85rem; }
+        .mm-column ul li:hover { color: #000; cursor: pointer; }
+        .mm-link-all { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-decoration: underline; 
+        }
+
+        .main-wrapper { transition: all 0.3s ease; padding-top: 80px; }
+
+        /* --- BREADCRUMB --- */
+        .page-breadcrumb {
+            padding: 20px 50px; 
+            font-size: 0.9rem;
+            color: #666;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* --- HERO BANNER SECTION --- */
+        .hero-banner-section {
+            width: 100%;
+            background-color: #000; 
+            padding: 30px 20px; 
+            position: relative;
+            text-align: center;
+            color: #fff;
+            margin-bottom: 60px;
+        }
+
+        .hero-banner-inner {
+            max-width: 900px; 
+            margin: 0 auto;
+            position: relative; 
+        }
+
+        .hero-banner-img {
+            display: block;
+            max-width: 100%;
+            height: auto; 
+            max-height: 350px; 
+            margin: 0 auto;
+            opacity: 0.7; 
+        }
+
+        .hero-overlay-content {
+            position: absolute;
+            top: auto; 
+            transform: none; 
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: left; 
+            padding: 30px;    
+            z-index: 2;
+        }
+
+        .overlay-title {
+            font-size: 2.5rem; 
+            font-weight: 700; 
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .overlay-subtitle {
+            font-size: 1.2rem; 
+            font-weight: 300;
+        }
+
+        /* --- ADVANTAGE TEXT SECTION --- */
+        .advantage-text-section {
+            padding: 0 50px; 
+        }
+        .advantage-text { 
+            font-size: 1.25rem; 
+            color: #333; 
+            margin-bottom: 20px; 
+            max-width: 900px; 
+            margin-left: auto; 
+            margin-right: auto; 
+            text-align: left; 
+        }
+        .advantage-title { 
+            font-size: 3rem; 
+            font-weight: 700; 
+            color: #00CED1; 
+            max-width: 900px;      
+            margin: 0 auto 30px;   
+            text-align: left;      
+        }
+
+        .advantage-desc { 
+            font-size: 1.25rem; 
+            color: #555; 
+            line-height: 1.6; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            text-align: left; 
+        }
+
+        /* --- SERVICES GRID --- */
+        .services-section {
+            padding: 40px 50px;
+            background: #fff;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            font-size: 0.9rem;
+            color: #444;
+            max-width: 900px; 
+            margin: 0 auto;   
+            padding-left: 60px; 
+        }
+        
+        .service-col {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .service-header {
+            font-weight: 700;
+            font-size: 1rem;
+            color: #00CED1; 
+            margin-bottom: 5px;
+        }
+
+        .service-list li { margin-bottom: 8px; }
+        
+        .turq-item {
+            color: #00CED1;
+            font-weight: 700;
+        }
+
+        /* --- COLORFUL HERO --- */
+        .colorful-section {
+            padding: 50px 50px 80px 50px; 
+            text-align: center;
+            background: #f9f9f9; 
+            margin-top: 0; 
+            margin-bottom: 40px;
+            overflow: hidden; 
+        }
+        
+        .colorful-title { 
+            font-size: 3.5rem; 
+            font-weight: 300; 
+            margin-bottom: 30px; 
+            background: linear-gradient(to right, #005c00, #00ff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            line-height: 1.2;
+        }
+
+        .colorful-word { font-weight: 700; }
+
+        .colorful-sub { 
+            font-size: 1.2rem; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            background: linear-gradient(to right, #1cb5e0, #000851);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+        
+        .colorful-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap; 
+        }
+        .colorful-icons img {
+            height: 60px; 
+            width: auto;
+            transition: transform 0.3s ease;
+        }
+        .colorful-icons img:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- CTA ELEMENTS --- */
+        .cta-container {
+            margin-top: 60px; 
+        }
+        .cta-text { font-size: 1.1rem; margin-bottom: 30px; }
+        .cta-btn {
+            background: #000;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #fff;
+            padding: 60px 50px 20px;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+        }
+        .footer-cols {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .f-col h5 { font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; }
+        
+        .footer-logo {
+            display: block;
+            height: 30px; 
+            width: auto;
+            margin-bottom: 15px; 
+        }
+
+        .icon-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            margin-bottom: 10px; 
+            color: #555; 
+            line-height: 1.5; 
+            text-decoration: none; 
+        }
+        .icon-row:hover { color: #000; }
+
+        .icon-row img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+
+        .f-col p { display: block; margin-bottom: 10px; color: #555; line-height: 1.5; }
+        .f-col a:not(.icon-row) { display: block; margin-bottom: 10px; color: #555; }
+        .f-col a:not(.icon-row):hover { color: #000; }
+
+        .copyright {
+            text-align: left;
+            color: #999;
+            font-size: 0.75rem;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ========================================= */
+        /* RESPONSIVE MEDIA QUERIES                  */
+        /* ========================================= */
+
+        /* Tablet (max-width: 992px) */
+        @media screen and (max-width: 992px) {
+            header { 
+                padding: 0 30px; 
+                /* Switch back to Edge-to-Edge for Tablet/Mobile */
+                justify-content: space-between; 
+                gap: 0;
+            }
+            
+            nav > ul { gap: 30px; }
+            
+            .mega-menu {
+                min-width: 100%;
+                left: 0;
+                transform: none;
+                top: 80px; 
+            }
+
+            .advantage-title, .advantage-desc, .advantage-text-section {
+                padding: 0 10px;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr); 
+                padding-left: 0;
+                width: 100%;
+            }
+
+            .footer-cols {
+                grid-template-columns: repeat(2, 1fr); 
+            }
+        }
+
+        /* Mobile (max-width: 768px) */
+        @media screen and (max-width: 768px) {
+            header, .page-breadcrumb, .services-section, .colorful-section, footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .advantage-text-section {
+                padding: 0 20px;
+            }
+
+            .mobile-menu-btn { display: flex; }
+            
+            nav {
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: #fff;
+                height: 0;
+                overflow: hidden;
+                transition: height 0.3s ease;
+                border-bottom: 1px solid #eee;
+            }
+
+            nav.active {
+                height: auto;
+                padding-bottom: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            nav > ul {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0;
+                width: 100%;
+            }
+
+            nav > ul > li {
+                width: 100%;
+                border-bottom: 1px solid #f5f5f5;
+            }
+
+            nav > ul > li > a {
+                padding: 15px 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .mega-menu {
+                position: static;
+                display: none; 
+                box-shadow: none;
+                transform: none;
+                width: 100%;
+                min-width: auto;
+                padding: 10px 30px;
+                flex-direction: column;
+                gap: 20px;
+                background: #fafafa;
+            }
+            
+            nav > ul > li:hover .mega-menu {
+                display: none; 
+            }
+            nav > ul > li.active-mobile .mega-menu {
+                display: flex;
+            }
+
+            .overlay-title { font-size: 1.8rem; }
+            .advantage-title { font-size: 2rem; }
+            .advantage-desc, .advantage-text { font-size: 1rem; }
+            .colorful-title { font-size: 2.2rem; }
+            
+            .services-grid {
+                grid-template-columns: 1fr; 
+                padding-left: 0;
+            }
+            
+            .footer-cols {
+                grid-template-columns: 1fr; 
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <img src="1.png" alt="Ulite Logo"> 
+        </div>
+
+        <div class="mobile-menu-btn" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav id="mainNav">
+            <ul>
+                <li onclick="toggleSubmenu(this)">
+                    <a href="#">Ceiling</a>
+                    <div class="mega-menu">
+                        <div class="mm-column">
+                            <h4>Suspended</h4>
+                            <ul>
+                                <li>Track Head</li>
+                                <li>Cylinder</li>
+                                <li>Linear</li>
+                                <li>Acoustic</li>
+                                <li>Decorative Pendant</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Suspended</a>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Recessed</h4>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling') }}">Round Downlight</a></li>
+                                <li>Square Downlight</li>
+                                <li>Trimless Downlight</li>
+                                <li>Magnetic Track</li>
+                                <li>Linear</li>
+                                <li>Troffer</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Recessed</a>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Surface</h4>
+                            <ul>
+                                <li>Track Head</li>
+                                <li>Cylinder</li>
+                                <li>Trimless Downlight</li>
+                                <li>Linear</li>
+                                <li>Magnetic Track</li>
+                                <li>Panel</li>
+                            </ul>
+                            <a href="#" class="mm-link-all">Explore All Surface</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="#">Wall</a></li>
+                <li><a href="#">Ground</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        
+        <div class="page-breadcrumb">
+            Support > About Us
+        </div>
+
+        <section class="hero-banner-section">
+            <div class="hero-banner-inner">
+                <img src="0.png" alt="Exploded View Lighting Fixture" class="hero-banner-img">
+                <div class="hero-overlay-content">
+                    <h2 class="overlay-title">Lighting Supply.</h2>
+                    <p class="overlay-subtitle">Value Added. On budget. On time.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantage-text-section">
+            <h2 class="advantage-title">The Ulite Advantage</h2>
+            <p class="advantage-text"></p>
+            <p class="advantage-desc">
+                UD is not just a seller, we don't just sell it and forget it.
+                We care about every concern regarding your lighting projects. 
+                We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.
+            </p>
+        </section>
+
+        <section class="services-section">
+            <div class="services-grid">
+                
+                <div class="service-col">
+                    <div class="service-header">Planning + Strategy</div>
+                    <ul class="service-list">
+                        <li>Specification review</li>
+                        <li>Budget consultation</li>
+                        <li>Application mockups</li>
+                        <li>Energy consultation</li>
+                        <li>Inventory management</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Estimating</div>
+                    <ul class="service-list">
+                        <li>Take-offs</li>
+                        <li>Plan review/RFIs</li>
+                        <li>Quotation</li>
+                        <li>Value-engineering</li>
+                        <li>Submittals</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Management</div>
+                    <ul class="service-list">
+                        <li>Logistics</li>
+                        <li>Ordering</li>
+                        <li>Project reporting</li>
+                        <li class="turq-item">Technical Support</li>
+                        <li>Project close-out</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="colorful-section">
+            <div class="colorful-title">Life Could Be <span class="colorful-word">Colorful</span></div>
+            
+            <div class="colorful-icons">
+                <img src="1.png" alt="Ulite Yellow">
+                <img src="5.png" alt="Ulite Orange">
+                <img src="31.png" alt="Ulite Green">
+                <img src="4.png" alt="Ulite Blue">
+            </div>
+
+            <div class="colorful-sub">You Define It, We Make It Reality</div>
+
+            <div class="cta-container">
+                <p class="cta-text">This is just a brief overview of what we do. We'd love to hear from you.</p>
+                <button class="cta-btn">Contact us</button>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-cols">
+                <div class="f-col">
+                    <img src="1.png" alt="Ulite Footer Logo" class="footer-logo">
+                    <h5>About Us</h5>
+                    <p>We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.</p>
+                </div>
+                <div class="f-col">
+                    <h5>Follow</h5>
+                    <a href="#" class="icon-row"><img src="10.jpg" alt="Instagram Logo" class="ig-logo"> Instagram</a>
+                    <a href="#" class="icon-row"><img src="7.png" alt="LinkedIn Logo"> LinkedIn</a>
+                    <a href="#" class="icon-row"><img src="8.png" alt="Facebook Logo"> Facebook</a>
+                    <a href="#" class="icon-row"><img src="9.png" alt="Pinterest Logo"> Pinterest</a>
+                    <a href="#" class="icon-row"><img src="11.jpg" alt="TikTok Logo"> TikTok</a>
+                </div>
+                <div class="f-col">
+                    <h5>Support</h5>
+                    <a href="#">Warranty</a>
+                    <a href="#">Business Terms</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">Lighting FAQ</a>
+                </div>
+
+                <div class="f-col">
+                    <h5>Contact</h5>
+                    <div class="icon-row">
+                        <img src="2.png" alt="Location Pin">
+                        <span>The Hills, TX 78738</span>
+                    </div>
+                    <div class="icon-row">
+                        <img src="3.png" alt="Phone Icon">
+                        <span>512-596-7310</span>
+                    </div>
+                    <a href="mailto:support@ulitedesign.com" class="icon-row">
+                        <img src="6.png" alt="Email Icon">
+                        <span>support@ulitedesign.com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright">
+                United States Copyright © 2025 Ulite Design, LLC All rights reserved.
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
+        }
+
+        function toggleSubmenu(element) {
+            if (window.innerWidth <= 768) {
+                element.classList.toggle('active-mobile');
+            }
+        }
+    </script>
+</body>
+</html>
+
