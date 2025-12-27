@@ -10,5 +10,9 @@ def home():
     # Serves your main HTML file
     return send_file('ulite_design.html')
 
+@app.route('/ceiling')
+def ceiling():
+    return send_file('ceiling_products.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
