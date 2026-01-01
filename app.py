@@ -3,7 +3,6 @@ from flask import Flask, render_template, abort
 app = Flask(__name__, static_folder='.', static_url_path='')
 
 # --- 1. THE PRODUCT DATABASE ---
-# This dictionary matches the structure of your Mega Menu
 CATALOG = {
     "suspended": {
         "track-head": [
@@ -75,47 +74,48 @@ CATALOG = {
 def home():
     return render_template('ulite_design.html')
 
-# Default Ceiling Route (Redirects to Round Downlight)
-@app.route('/ceiling')
-def ceiling():
-    return ceiling_subcategory('recessed', 'round-downlight')
-
-# --- 2. DYNAMIC CATEGORY ROUTE ---
-# This single function handles ALL categories (Suspended, Recessed, Surface)
-@app.route('/ceiling/<category>/<subcategory>')
-def ceiling_subcategory(category, subcategory):
-    # Lookup the products in the CATALOG based on the URL
-    products = CATALOG.get(category, {}).get(subcategory, [])
-    
-    # Send the data to the template
-    return render_template('ceiling_products.html', 
-                           products=products, 
-                           cat_name=category, 
-                           sub_name=subcategory)
-
-# --- NEW ROUTE FOR "EXPLORE ALL" LINKS ---
+# --- 2. "EXPLORE ALL" ROUTE (Aggregates Products) ---
 @app.route('/ceiling/<category>')
 def ceiling_category(category):
-    # 1. Get all subcategories for this main category (e.g., all Suspended types)
+    # Get all subcategories for this main category
     category_data = CATALOG.get(category, {})
     
-    # 2. Combine all lists into one big list of products
+    # Combine all lists into one big list of products
     all_products = []
     for subcat_list in category_data.values():
         all_products.extend(subcat_list)
     
-    # 3. Send the combined list to the template
+    # Send the combined list to the template
     return render_template('ceiling_products.html', 
                            products=all_products, 
                            cat_name=category, 
                            sub_name="All Models")
 
-# --- 3. DYNAMIC PRODUCT DETAIL ROUTE ---
+# --- 3. SPECIFIC SUBCATEGORY ROUTE ---
+@app.route('/ceiling/<category>/<subcategory>')
+def ceiling_subcategory(category, subcategory):
+    # Lookup the products in the CATALOG based on the URL
+    products = CATALOG.get(category, {}).get(subcategory, [])
+    
+    return render_template('ceiling_products.html', 
+                           products=products, 
+                           cat_name=category, 
+                           sub_name=subcategory)
+
+@app.route('/ceiling')
+def ceiling():
+    # Default redirect
+    return ceiling_subcategory('recessed', 'round-downlight')
+
+# --- 4. PRODUCT DETAIL ROUTE (The Fix for 404) ---
 @app.route('/product/<product_name>')
 def product(product_name):
     selected_product = None
     
-    # Search the entire catalog for the clicked product
+    # Debug print: Check your terminal to see what product Flask is looking for
+    print(f"Searching for product: {product_name}")
+
+    # Search the entire catalog
     for cat in CATALOG.values():
         for sub in cat.values():
             for p in sub:
@@ -126,11 +126,12 @@ def product(product_name):
         if selected_product: break
     
     if selected_product is None:
+        print("Product not found in catalog!")
         abort(404)
         
     return render_template('product_detail.html', product=selected_product)
 
-# Placeholder Routes for other main sections
+# --- 5. PLACEHOLDER ROUTES ---
 @app.route('/wall')
 def wall():
     return render_template('ulite_design.html')
