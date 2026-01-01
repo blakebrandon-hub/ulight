@@ -28,12 +28,8 @@
             z-index: 1000;
             padding: 0 20px;
             display: flex;
-            
-            /* DESKTOP LAYOUT: CENTER EVERYTHING & USE GAPS */
             justify-content: center; 
             align-items: center;
-            
-            /* This Gap handles the space between the LOGO and the first menu item */
             gap: 8vw; 
         }
         
@@ -45,8 +41,6 @@
             align-items: center;
             gap: 10px;
             z-index: 1001; 
-            
-            /* REMOVED ABSOLUTE POSITIONING so it flows with the text */
             position: static;
             transform: none;
         }
@@ -56,13 +50,8 @@
             width: auto;
         }
 
-        /* Desktop Nav Styles */
         nav { display: flex; align-items: center; }
-        
-        /* This Gap handles the space between the menu items (Ceiling <-> Wall) */
-        /* It matches the header gap so the Logo <-> Ceiling gap looks identical */
         nav > ul { display: flex; gap: 8vw; align-items: center; } 
-        
         nav > ul > li { position: relative; }
         nav > ul > li > a { 
             font-weight: 600; 
@@ -72,7 +61,7 @@
             display: block;
         }
 
-        /* Mobile Menu Toggle (Hidden on Desktop) */
+        /* Mobile Menu Toggle */
         .mobile-menu-btn {
             display: none;
             flex-direction: column;
@@ -97,15 +86,16 @@
             background: #fff;
             padding: 30px 50px;
             width: auto;
-            min-width: 600px; 
+            min-width: 700px; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             border-top: 1px solid #eee;
             z-index: 999;
             justify-content: space-between;
+            gap: 40px;
         }
 
         @media (min-width: 992px) {
-            nav > ul > li:hover .mega-menu { display: flex; gap: 40px; }
+            nav > ul > li:hover .mega-menu { display: flex; }
             
             body:has(header:hover) .main-wrapper {
                 filter: blur(8px);
@@ -116,7 +106,7 @@
         
         .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
         .mm-column ul li { margin-bottom: 8px; color: #555; font-size: 0.85rem; }
-        .mm-column ul li:hover { color: #000; cursor: pointer; }
+        .mm-column ul li a:hover { color: #00CED1; cursor: pointer; }
         .mm-link-all { 
             display: block; 
             margin-top: 15px; 
@@ -388,7 +378,6 @@
         @media screen and (max-width: 992px) {
             header { 
                 padding: 0 30px; 
-                /* Switch back to Edge-to-Edge for Tablet/Mobile */
                 justify-content: space-between; 
                 gap: 0;
             }
@@ -508,7 +497,7 @@
 
     <header>
         <div class="logo">
-            <img src="1.png" alt="Ulite Logo"> 
+            <a href="{{ url_for('home') }}"><img src="1.png" alt="Ulite Logo"></a> 
         </div>
 
         <div class="mobile-menu-btn" onclick="toggleMenu()">
@@ -520,49 +509,49 @@
         <nav id="mainNav">
             <ul>
                 <li onclick="toggleSubmenu(this)">
-                    <a href="#">Ceiling</a>
+                    <a href="{{ url_for('ceiling') }}">Ceiling</a>
                     <div class="mega-menu">
                         <div class="mm-column">
                             <h4>Suspended</h4>
                             <ul>
-                                <li>Track Head</li>
-                                <li>Cylinder</li>
-                                <li>Linear</li>
-                                <li>Acoustic</li>
-                                <li>Decorative Pendant</li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='acoustic') }}">Acoustic</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='decorative-pendant') }}">Decorative Pendant</a></li>
                             </ul>
-                            <a href="#" class="mm-link-all">Explore All Suspended</a>
+                            <a href="{{ url_for('ceiling_category', category='suspended') }}" class="mm-link-all">Explore All Suspended</a>
                         </div>
                         <div class="mm-column">
                             <h4>Recessed</h4>
                             <ul>
-                                <li><a href="{{ url_for('ceiling') }}">Round Downlight</a></li>
-                                <li>Square Downlight</li>
-                                <li>Trimless Downlight</li>
-                                <li>Magnetic Track</li>
-                                <li>Linear</li>
-                                <li>Troffer</li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='round-downlight') }}">Round Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='square-downlight') }}">Square Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='trimless-downlight') }}">Trimless Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='magnetic-track') }}">Magnetic Track</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='troffer') }}">Troffer</a></li>
                             </ul>
-                            <a href="#" class="mm-link-all">Explore All Recessed</a>
+                            <a href="{{ url_for('ceiling_category', category='recessed') }}" class="mm-link-all">Explore All Recessed</a>
                         </div>
                         <div class="mm-column">
                             <h4>Surface</h4>
                             <ul>
-                                <li>Track Head</li>
-                                <li>Cylinder</li>
-                                <li>Trimless Downlight</li>
-                                <li>Linear</li>
-                                <li>Magnetic Track</li>
-                                <li>Panel</li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='trimless-downlight') }}">Trimless Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='magnetic-track') }}">Magnetic Track</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='panel') }}">Panel</a></li>
                             </ul>
-                            <a href="#" class="mm-link-all">Explore All Surface</a>
+                            <a href="{{ url_for('ceiling_category', category='surface') }}" class="mm-link-all">Explore All Surface</a>
                         </div>
                     </div>
                 </li>
-                <li><a href="#">Wall</a></li>
-                <li><a href="#">Ground</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Support</a></li>
+                <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="{{ url_for('support') }}">Support</a></li>
             </ul>
         </nav>
     </header>
@@ -588,7 +577,7 @@
             <p class="advantage-text"></p>
             <p class="advantage-desc">
                 UD is not just a seller, we don't just sell it and forget it.
-                We care about every concern regarding your lighting projects. 
+                We care about every concern regarding your lighting projects.
                 We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.
             </p>
         </section>
@@ -711,4 +700,3 @@
     </script>
 </body>
 </html>
-
