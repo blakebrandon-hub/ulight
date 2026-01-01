@@ -26,9 +26,50 @@
         }
         .logo { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
         .logo img { height: 40px; width: auto; }
+        
         nav { display: flex; align-items: center; }
         nav > ul { display: flex; gap: 8vw; align-items: center; } 
+        nav > ul > li { position: relative; } /* Needed for Mega Menu positioning */
         nav > ul > li > a { font-weight: 600; font-size: 0.9rem; padding: 28px 0; display: block; }
+
+        /* --- MEGA MENU STYLES --- */
+        .mega-menu {
+            display: none; 
+            position: absolute;
+            top: 100%; 
+            left: 50%;
+            transform: translateX(-50%); 
+            background: #fff;
+            padding: 30px 50px;
+            width: auto;
+            min-width: 700px; /* Adjusted for 3 columns */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-top: 1px solid #eee;
+            z-index: 999;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        /* Show Mega Menu on Hover (Desktop) */
+        @media (min-width: 992px) {
+            nav > ul > li:hover .mega-menu { display: flex; }
+            body:has(header:hover) .main-wrapper {
+                filter: blur(8px);
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+        }
+
+        .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: #000; }
+        .mm-column ul li { margin-bottom: 8px; color: #555; font-size: 0.85rem; }
+        .mm-column ul li a:hover { color: #00CED1; cursor: pointer; }
+        .mm-link-all { 
+            display: block; 
+            margin-top: 15px; 
+            font-weight: 700; 
+            font-size: 0.85rem; 
+            text-decoration: underline; 
+        }
 
         /* Mobile Menu */
         .mobile-menu-btn { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
@@ -43,6 +84,7 @@
             color: #666;
             max-width: 1400px;
             margin: 0 auto;
+            text-transform: capitalize; /* Makes 'round-downlight' look like 'Round-downlight' */
         }
 
         /* --- MAIN LAYOUT --- */
@@ -95,7 +137,6 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr); 
             grid-template-rows: auto auto; 
-            /* Increased row-gap to 80px to make space for the buttons */
             gap: 80px 30px; 
             padding: 10px; 
         }
@@ -103,17 +144,17 @@
         /* --- CENTERED NAV BUTTONS --- */
         .carousel-controls-center {
             position: absolute;
-            top: 50%; /* Puts it in the middle vertically */
-            left: 50%; /* Puts it in the middle horizontally */
-            transform: translate(-50%, -50%); /* Exact centering */
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
             display: flex;
             gap: 10px;
             z-index: 20;
-            margin-top: -10px; /* Slight adjustment to sit perfectly in the gap */
+            margin-top: -10px; 
         }
 
         .nav-btn {
-            background: #ccc; /* Grey background matching image */
+            background: #ccc; 
             border: none;
             width: 32px;
             height: 24px;
@@ -124,7 +165,6 @@
             transition: background 0.3s;
         }
 
-        /* Triangle Arrows using CSS borders for sharpness */
         .arrow-icon {
             border: solid white;
             border-width: 0 2px 2px 0;
@@ -146,13 +186,13 @@
         }
 
         .product-image-container {
-            background-color: #ffebe5; /* Peachy/Pink tone from your image */
+            background-color: #ffebe5; 
             width: 100%;
             aspect-ratio: 1 / 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 20px; /* More rounded corners like your image */
+            border-radius: 20px; 
             overflow: hidden;
         }
         
@@ -202,11 +242,52 @@
         <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
         <nav>
             <ul>
-                <li><a href="#">Ceiling</a></li>
-                <li><a href="#">Wall</a></li>
-                <li><a href="#">Ground</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Support</a></li>
+                <li>
+                    <a href="{{ url_for('ceiling') }}">Ceiling</a>
+                    <div class="mega-menu">
+                        <div class="mm-column">
+                            <h4>Suspended</h4>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='acoustic') }}">Acoustic</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='decorative-pendant') }}">Decorative Pendant</a></li>
+                            </ul>
+                            <a href="{{ url_for('ceiling_category', category='suspended') }}" class="mm-link-all">Explore All Suspended</a>
+                        </div>
+                        
+                        <div class="mm-column">
+                            <h4>Recessed</h4>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='round-downlight') }}">Round Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='square-downlight') }}">Square Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='trimless-downlight') }}">Trimless Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='magnetic-track') }}">Magnetic Track</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='troffer') }}">Troffer</a></li>
+                            </ul>
+                            <a href="{{ url_for('ceiling_category', category='recessed') }}" class="mm-link-all">Explore All Recessed</a>
+                        </div>
+
+                        <div class="mm-column">
+                            <h4>Surface</h4>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='trimless-downlight') }}">Trimless Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='magnetic-track') }}">Magnetic Track</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='panel') }}">Panel</a></li>
+                            </ul>
+                            <a href="{{ url_for('ceiling_category', category='surface') }}" class="mm-link-all">Explore All Surface</a>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="{{ url_for('support') }}">Support</a></li>
             </ul>
         </nav>
     </header>
@@ -214,17 +295,19 @@
     <div class="main-wrapper">
         
         <div class="page-breadcrumb">
-            Ceiling > Round Downlight
+            Ceiling 
+            {% if cat_name %} > {{ cat_name|title }} {% endif %}
+            {% if sub_name %} > {{ sub_name|replace('-', ' ')|title }} {% endif %}
         </div>
 
         <div class="category-layout">
             <aside class="sidebar">
                 <ul class="sidebar-menu">
-                    <li><a href="#" class="active">Ceiling</a></li>
-                    <li><a href="#">Wall</a></li>
-                    <li><a href="#">Ground</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="{{ url_for('ceiling') }}" class="active">Ceiling</a></li>
+                    <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                    <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('support') }}">Support</a></li>
                 </ul>
             </aside>
 
@@ -243,126 +326,25 @@
                     <div class="carousel-track" id="track">
                         
                         <div class="carousel-slide">
-                            <div class="product-card">
-                                <a href="{{ url_for('product') }}"><div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Super+3"  alt="Super 3inch">
-                                </div></a>
-                                <div class="product-info">
-                                    <a href="{{ url_for('product') }}"><h3>Super 3inch Adjustable</h3></a>
-                                    <div class="product-specs">
-                                        Aperture Size: 2inch<br>
-                                        Lumens: 640~1700lm<br>
-                                        Environmental Listing: Damp Rated
+                            {% if products %}
+                                {% for p in products %}
+                                <div class="product-card">
+                                    <a href="{{ url_for('product', product_name=p.name) }}"><div class="product-image-container">
+                                        <img src="{{ p.img }}" alt="{{ p.name }}">
+                                    </div></a>
+                                    <div class="product-info">
+                                        <a href="{{ url_for('product', product_name=p.name) }}"><h3>{{ p.name }}</h3></a>
+                                        <div class="product-specs">
+                                            Aperture Size: {{ p.aperture }}<br>
+                                            Lumens: {{ p.lumens }}<br>
+                                            Environmental Listing: {{ p.env }}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Super+4" alt="Super 4inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Super 4inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 4inch<br>
-                                        Lumens: 800~1600lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Wino+6" alt="Wino 6inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Wino 6inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 6inch<br>
-                                        Lumens: 1600~3200lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Lux+6" alt="Lux 6inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Lux 6inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 6inch<br>
-                                        Lumens: 1800~4800lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Glaxy+8" alt="Glaxy 8inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Glaxy 8inch</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 8inch<br>
-                                        Lumens: 3200~6400lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Max+10" alt="Max 10inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Max 10inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 10inch<br>
-                                        Lumens: 3200~8000lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="carousel-slide">
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Super+3" alt="Super 3inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Super 3inch Adjustable</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 2inch<br>
-                                        Lumens: 640~1700lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Super+4" alt="Super 4inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Super 4inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 4inch<br>
-                                        Lumens: 800~1600lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image-container">
-                                    <img src="https://placehold.co/300x300/e0e0e0/333?text=Wino+6" alt="Wino 6inch">
-                                </div>
-                                <div class="product-info">
-                                    <h3>Wino 6inch Fix</h3>
-                                    <div class="product-specs">
-                                        Aperture Size: 6inch<br>
-                                        Lumens: 1600~3200lm<br>
-                                        Environmental Listing: Damp Rated
-                                    </div>
-                                </div>
-                            </div>
+                                {% endfor %}
+                            {% else %}
+                                <p style="padding: 20px;">No products found in this category.</p>
+                            {% endif %}
                         </div>
 
                     </div>
@@ -410,7 +392,6 @@
         function updateCarousel() {
             track.style.transform = `translateX(-${currentSlide * 100}%)`;
             
-            // Visual feedback for disabled buttons
             prevBtn.classList.toggle('disabled', currentSlide === 0);
             nextBtn.classList.toggle('disabled', currentSlide === totalSlides - 1);
         }
