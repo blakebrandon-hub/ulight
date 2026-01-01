@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super 3inch Adjustable - Ulite Design</title>
+    <title>{{ product.name }} - Ulite Design</title>
     <style>
         /* --- RESET & TYPOGRAPHY (Matches Homepage) --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -232,15 +232,15 @@
 <body>
 
     <header>
-        <a href="{{ url_for('home') }}"><div class="logo"><img src="1.png" alt="Ulite Logo" href="/"></div></a>
+        <a href="{{ url_for('home') }}"><div class="logo"><img src="1.png" alt="Ulite Logo"></div></a>
         <div class="mobile-menu-btn"><span></span><span></span><span></span></div>
         <nav>
             <ul>
-                <li><a href="#">Ceiling</a></li>
-                <li><a href="#">Wall</a></li>
-                <li><a href="#">Ground</a></li>
-                <li><a href="#">Gallery</a></li>
-                <li><a href="#">Support</a></li>
+                <li><a href="{{ url_for('ceiling') }}">Ceiling</a></li>
+                <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="{{ url_for('support') }}">Support</a></li>
             </ul>
         </nav>
     </header>
@@ -248,18 +248,18 @@
     <div class="main-wrapper">
         
         <div class="page-breadcrumb">
-            Ceiling > Round Downlight > Super 3inch Adjustable
+            Ceiling > Round Downlight > {{ product.name }}
         </div>
 
         <div class="category-layout">
             
             <aside class="sidebar">
                 <ul class="sidebar-menu">
-                    <li><a href="#" class="active">Ceiling</a></li>
-                    <li><a href="#">Wall</a></li>
-                    <li><a href="#">Ground</a></li>
-                    <li><a href="#">Gallery</a></li>
-                    <li><a href="#">Support</a></li>
+                    <li><a href="{{ url_for('ceiling') }}" class="active">Ceiling</a></li>
+                    <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                    <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                    <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url_for('support') }}">Support</a></li>
                 </ul>
             </aside>
 
@@ -267,11 +267,11 @@
                 
                 <div class="product-top-section">
                     <div class="main-product-image">
-                        <img src="https://placehold.co/500x500/e0e0e0/333?text=Super+3+Adjustable" alt="Super 3inch Adjustable">
+                        <img src="{{ product.img }}" alt="{{ product.name }}">
                     </div>
 
                     <div class="product-info-col">
-                        <h1>Super 3inch Adjustable</h1>
+                        <h1>{{ product.name }}</h1>
 
                         <div class="info-tabs">
                             <span class="tab-link">FEATURES</span>
@@ -279,7 +279,7 @@
                         </div>
 
                         <div class="description-text">
-                            Small and powerful runs in this family of 3" aperture recessed downlight that offer up to 1700 delivered lumens.<br><br>
+                            Small and powerful runs in this family of {{ product.aperture }} aperture recessed downlight that offer up to {{ product.lumens.split('~')[1] }} delivered lumens.<br><br>
                             This mini downlight family is complete with high performance and an expansive range of options for optics, trim styles, trim configurations, beam spreads, housings, mounting, and more offering the flexibility your projects require.<br><br>
                             Architectural Friendly: Up to 50,000 unique combinations.
                         </div>
@@ -302,7 +302,7 @@
                             <span class="accordion-icon">&#8964;</span>
                         </div>
                         <div class="accordion-content">
-                            <a href="#">Download Super 3inch Adjustable Specsheet (PDF)</a>
+                            <a href="#">Download {{ product.name }} Specsheet (PDF)</a>
                         </div>
                     </div>
 
