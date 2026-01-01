@@ -107,26 +107,30 @@ def ceiling():
     # Default redirect
     return ceiling_subcategory('recessed', 'round-downlight')
 
-# --- 4. PRODUCT DETAIL ROUTE (The Fix for 404) ---
+# --- 4. PRODUCT DETAIL ROUTE (Robust Search Fix) ---
 @app.route('/product/<product_name>')
 def product(product_name):
     selected_product = None
     
-    # Debug print: Check your terminal to see what product Flask is looking for
-    print(f"Searching for product: {product_name}")
+    # 1. Normalize the search term (lowercase, remove spaces)
+    # This fixes issues where "Super%203inch" doesn't match "Super 3inch"
+    search_term = product_name.lower().replace(' ', '').replace('%20', '')
 
-    # Search the entire catalog
+    # 2. Search the entire catalog
     for cat in CATALOG.values():
         for sub in cat.values():
             for p in sub:
-                if p['name'] == product_name:
+                # Normalize the catalog name too
+                catalog_name = p['name'].lower().replace(' ', '')
+                
+                # Compare the "clean" versions
+                if catalog_name == search_term:
                     selected_product = p
                     break
             if selected_product: break
         if selected_product: break
     
     if selected_product is None:
-        print("Product not found in catalog!")
         abort(404)
         
     return render_template('product_detail.html', product=selected_product)
@@ -150,3 +154,4 @@ def support():
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
+
