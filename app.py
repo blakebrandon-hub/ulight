@@ -111,8 +111,13 @@ def ceiling_category(category):
                            sub_name="All Models")
 
 # --- 3. DYNAMIC PRODUCT DETAIL ROUTE ---
-@app.route('/product/<product_name>')
+@app.route('/product/<path:product_name>')
 def product(product_name):
+    from urllib.parse import unquote
+    
+    # Decode URL-encoded product name
+    product_name = unquote(product_name)
+    
     selected_product = None
     
     # Search the entire catalog for the clicked product
