@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <style>
+        /* --- PAGE SPECIFIC STYLES --- */
+        
+.hero-banner-section {
+    width: 100%; 
+    background-color: #000; 
+    padding: 0; 
+    position: relative; 
+    text-align: center; 
+    color: #fff; 
+    margin-bottom: 0;
+    margin-top: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-banner-inner { 
+    max-width: 100%; 
+    width: 100%;
+    height: 100vh;
+    margin: 0; 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-banner-img { 
+    display: block; 
+    width: auto;
+    max-width: 70%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    margin: 0 auto;
+    opacity: 1;
+    transform: translate(50px, 50px); /* Moves right 50px and down 50px */
+}
+.hero-overlay-content { 
+    position: absolute; 
+    bottom: 50px; 
+    left: 50px;
+    text-align: left; 
+    padding: 30px; 
+    z-index: 2; 
+}
+
+.main-wrapper {
+    margin: 0;
+    padding: 0;
+}
+
+/* Add this to ensure no body margins interfere */
+body {
+    margin: 0;
+    padding: 0;
+}
+
+        .overlay-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; line-height: 1.2; }
+        .overlay-subtitle { font-size: 1.2rem; font-weight: 300; }
+
+        .advantage-text-section { padding: 60px 50px 0 50px; }
+        .advantage-title { font-size: 3rem; font-weight: 700; color: #00CED1; max-width: 900px; margin: 0 auto 30px; text-align: left; }
+        .advantage-desc { font-size: 1.25rem; color: #111; line-height: 1.6; max-width: 900px; margin: 0 auto; text-align: left; }
+
+        .services-section { padding: 40px 50px; background: #fff; max-width: 1400px; margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; font-size: 0.9rem; color: #444; max-width: 900px; margin: 0 auto; padding-left: 60px; }
+        .service-col { display: flex; flex-direction: column; gap: 15px; }
+        .service-header { font-weight: 700; font-size: 1rem; color: #00CED1; margin-bottom: 5px; }
+        .service-list li { margin-bottom: 8px; }
+        .turq-item { color: #00CED1; font-weight: 700; }
+
+        .colorful-section { padding: 50px 50px 80px 50px; text-align: center; background: #f9f9f9; margin-top: 0; margin-bottom: 40px; overflow: hidden; }
+        .colorful-title { font-size: 3.5rem; font-weight: 300; margin-bottom: 30px; background: linear-gradient(to right, #005c00, #00ff00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; line-height: 1.2; }
+        .colorful-word { font-weight: 700; }
+        .colorful-sub { font-size: 1.2rem; letter-spacing: 1px; text-transform: uppercase; background: linear-gradient(to right, #1cb5e0, #000851); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: inline-block; }
+        .colorful-icons { display: flex; justify-content: center; gap: 40px; margin-bottom: 30px; flex-wrap: wrap; }
+        .colorful-icons img { height: 60px; width: auto; transition: transform 0.3s ease; }
+        .colorful-icons img:hover { transform: scale(1.1); }
+
+        .cta-container { margin-top: 60px; }
+        .cta-text { font-size: 1.1rem; margin-bottom: 30px; }
+        .cta-btn { background: #000; color: #666; padding: 12px 30px; font-size: 0.9rem; font-weight: 600; border: none; cursor: pointer; }
+
+        @media (max-width: 992px) {
+            .advantage-title, .advantage-desc, .advantage-text-section { padding: 0 10px; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); padding-left: 0; width: 100%; }
+        }
+        @media (max-width: 768px) {
+            .hero-banner-section { min-height: 100vh; }
+            .hero-banner-inner { height: 100vh; }
+            .hero-banner-img { height: 100vh; }
+            .colorful-section { padding-left: 20px; padding-right: 20px; }
+            .advantage-text-section { padding: 40px 20px 0 20px; }
+            .overlay-title { font-size: 1.8rem; }
+            .advantage-title { font-size: 2rem; }
+            .advantage-desc { font-size: 1rem; }
+            .colorful-title { font-size: 2.2rem; }
+            .services-grid { grid-template-columns: 1fr; padding-left: 0; }
+        }
+    </style>
+
+    <div class="main-wrapper">
+
+        <section class="hero-banner-section">
+            <div class="hero-banner-inner">
+                <img src="/static/0.png" alt="Exploded View Lighting Fixture" class="hero-banner-img">
+                <div class="hero-overlay-content">
+                    <h2 class="overlay-title">Lighting Supply.</h2>
+                    <p class="overlay-subtitle">Value Added. On budget. On time.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantage-text-section">
+            <h2 class="advantage-title">The Ulite Advantage</h2>
+            <p class="advantage-desc">
+                UD is not just a seller, we don't just sell it and forget it.
+                We care about every concern regarding your lighting projects.
+                We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.
+            </p>
+        </section>
+
+        <section class="services-section">
+            <div class="services-grid">
+                
+                <div class="service-col">
+                    <div class="service-header">Planning + Strategy</div>
+                    <ul class="service-list">
+                        <li>Specification review</li>
+                        <li>Budget consultation</li>
+                        <li>Application mockups</li>
+                        <li>Energy consultation</li>
+                        <li>Inventory management</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Estimating</div>
+                    <ul class="service-list">
+                        <li>Take-offs</li>
+                        <li>Plan review/RFIs</li>
+                        <li>Quotation</li>
+                        <li>Value-engineering</li>
+                        <li>Submittals</li>
+                    </ul>
+                </div>
+
+                <div class="service-col">
+                    <div class="service-header">Project Management</div>
+                    <ul class="service-list">
+                        <li>Logistics</li>
+                        <li>Ordering</li>
+                        <li>Project reporting</li>
+                        <li class="turq-item">Technical Support</li>
+                        <li>Project close-out</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="colorful-section">
+            <div class="colorful-title">Life Could Be <span class="colorful-word">Colorful</span></div>
+            
+            <div class="colorful-icons">
+                <img src="/static/1.png" alt="Ulite Yellow">
+                <img src="/static/5.png" alt="Ulite Orange">
+                <img src="/static/31.png" alt="Ulite Green">
+                <img src="/static/4.png" alt="Ulite Blue">
+            </div>
+
+            <div class="colorful-sub">You Define It, We Make It Reality</div>
+
+            <div class="cta-container">
+                <p class="cta-text">This is just a brief overview of what we do. We'd love to hear from you.</p>
+                <button class="cta-btn">Contact us</button>
+            </div>
+        </section>
+
+    </div>
+
+{% endblock %}

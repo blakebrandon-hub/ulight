@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Ulite Design{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+
+<style>
+    /* --- GLOBAL RESET --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        color: #000;
+        background-color: #ffffff;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* --- HEADER & NAV --- */
+    header {
+        position: fixed; top: 0; width: 100%; height: 80px; 
+        background: #f1f1f1; z-index: 2000; padding: 0 20px;
+        display: flex; justify-content: center; align-items: center; gap: 8vw; 
+    }
+    
+    .logo img { height: 40px; width: auto; }
+    nav > ul { display: flex; gap: 8vw; align-items: center; } 
+    nav > ul > li { position: static; } 
+    nav > ul > li > a { font-weight: 600; font-size: 0.9rem; padding: 28px 0; display: block; }
+
+    /* --- MEGA MENU --- */
+    .mega-menu {
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0;
+        width: 100%;
+        height: auto;
+        background: #fff;
+        padding: 110px 50px 50px 50px; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        z-index: 1500;
+        justify-content: center;
+        gap: 60px;
+        border-bottom: 1px solid #eee;
+    }
+
+    nav > ul > li:hover .mega-menu { display: flex; }
+
+    .mm-column h4 { font-weight: 700; margin-bottom: 15px; font-size: 0.9rem; color: gray; }
+    .mm-column ul li { margin-bottom: 8px; color: #111; font-size: 0.85rem; }
+    .mm-column ul li a:hover { color: #00CED1; cursor: pointer; }
+    .mm-link-all { display: block; margin-top: 15px; font-weight: 700; font-size: 0.85rem; text-decoration: underline; }
+
+    /* --- THE WHITE FOG BLUR (UPDATED) --- */
+    .main-wrapper { 
+        transition: filter 0.5s ease, opacity 0.5s ease, brightness 0.5s ease; 
+        padding-top: 80px; 
+    }
+
+    /* Target the content below the fixed white header */
+    body:has(nav > ul > li:hover) .main-wrapper {
+        /* Increased blur and brightness for the 'White Fog' look */
+        filter: blur(25px) brightness(1.6) grayscale(100%); 
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    /* --- FOOTER CSS --- */
+    footer { background: #fff; padding: 60px 50px 20px; border-top: 1px solid #eee; margin-top: 40px; }
+    .footer-cols { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto 60px; }
+    .f-col h5 { font-weight: 700; margin-bottom: 20px; font-size: 0.9rem; }
+    .footer-logo { display: block; height: 30px; width: auto; margin-bottom: 15px; }
+
+    .icon-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #111; line-height: 1.5; text-decoration: none; }
+    .icon-row:hover { color: #000; }
+    .icon-row img { width: 20px; height: 20px; object-fit: contain; }
+
+    .f-col p { display: block; margin-bottom: 10px; color: #111; line-height: 1.5; }
+    .f-col a:not(.icon-row) { display: block; margin-bottom: 10px; color: #111; }
+    .f-col a:not(.icon-row):hover { color: #000; }
+
+    .copyright { text-align: left; color: #999; font-size: 0.75rem; padding-top: 20px; border-top: 1px solid #f0f0f0; max-width: 1400px; margin: 0 auto; }
+</style>
+
+</head>
+<body>
+
+    <header>
+        <a href="{{ url_for('home') }}"><div class="logo"><img src="/static/1.png" alt="Ulite Logo"></div></a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{{ url_for('ceiling') }}">Ceiling</a>
+                    <div class="mega-menu">
+                        <div class="mm-column">
+                            <h4>Recessed</h4>
+                            <a href="{{ url_for('ceiling_category', category='recessed') }}" class="mm-link-all">Explore All Recessed</a><br>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='round-downlight') }}">Round Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='square-downlight') }}">Square Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='trimless-downlight') }}">Trimless Downlight</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='magnetic-track') }}">Magnetic Track</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='multiple') }}">Multiple</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='troffer') }}">Troffer</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='recessed', subcategory='troffer') }}">Panel</a></li>
+                            </ul>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Surface</h4>
+                            <a href="{{ url_for('ceiling_category', category='surface') }}" class="mm-link-all">Explore All Surface</a><br>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='surface', subcategory='panel') }}">Panel</a></li>
+                            </ul>
+                        </div>
+                        <div class="mm-column">
+                            <h4>Suspended</h4>
+                            <a href="{{ url_for('ceiling_category', category='suspended') }}" class="mm-link-all">Explore All Suspended</a><br>
+                            <ul>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='track-head') }}">Track Head</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='cylinder') }}">Cylinder</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='linear') }}">Linear</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='acoustic') }}">Acoustic</a></li>
+                                <li><a href="{{ url_for('ceiling_subcategory', category='suspended', subcategory='decorative-pendant') }}">Decorative</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                <li><a href="{{ url_for('wall') }}">Wall</a></li>
+                <li><a href="{{ url_for('ground') }}">Ground</a></li>
+                <li><a href="{{ url_for('gallery') }}">Gallery</a></li>
+                <li><a href="{{ url_for('support') }}">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-wrapper">
+        {% block content %}{% endblock %}
+
+        <footer>
+            <div class="footer-cols">
+                <div class="f-col">
+                    <img src="/static/1.png" alt="Ulite Footer Logo" class="footer-logo">
+                    <h5>About Us</h5>
+                    <p>We serve small to medium-sized companies and are built to offer lighting packages with affordable design services.</p>
+                </div>
+                <div class="f-col">
+                    <h5>Follow</h5>
+                    <a href="#" class="icon-row"><img src="/static/10.jpg" alt="Instagram"> Instagram</a>
+                    <a href="#" class="icon-row"><img src="/static/7.png" alt="LinkedIn"> LinkedIn</a>
+                    <a href="#" class="icon-row"><img src="/static/8.png" alt="Facebook"> Facebook</a>
+                    <a href="#" class="icon-row"><img src="/static/9.png" alt="Pinterest"> Pinterest</a>
+                </div>
+                <div class="f-col">
+                    <h5>Support</h5>
+                    <a href="#">Warranty</a>
+                    <a href="#">Business Terms</a>
+                    <a href="#">Shipping Policy</a>
+                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">Lighting FAQ</a>
+                </div>
+                <div class="f-col">
+                    <h5>Contact</h5>
+                    <div class="icon-row">
+                 
+                        <span>The Hills, TX 78738</span>
+                    </div>
+                    <div class="icon-row">
+                        <img src="/static/3.png" alt="Phone">
+                        <span>512-596-7310</span>
+                    </div>
+                    <a href="mailto:support@ulitedesign.com" class="icon-row">
+                        <img src="/static/6.png" alt="Email">
+                        <span>support@ulitedesign.com</span>
+                    </a>
+                </div>
+            </div>
+            <div class="copyright" style="text-align: center;">
+                United States Copyright © 2025 Ulite Design, LLC All rights reserved.
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

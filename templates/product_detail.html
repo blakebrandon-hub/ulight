@@ -1,0 +1,169 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <style>
+    /* --- RESET & TYPOGRAPHY --- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body { 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        color: #000; 
+        font-size: 16px; 
+        line-height: 1.5; 
+    }
+
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    /* --- HEADER & NAV CSS --- */
+    header {
+        position: fixed; top: 0; width: 100%; height: 80px; 
+        background: #f1f1f1; z-index: 1000; padding: 0 20px;
+        display: flex; justify-content: center; align-items: center; gap: 8vw; 
+    }
+    .logo { font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 10px; }
+    .logo img { height: 40px; width: auto; }
+
+    nav { display: flex; align-items: center; }
+    nav > ul { display: flex; gap: 8vw; align-items: center; } 
+    nav > ul > li { position: relative; } 
+    nav > ul > li > a { font-weight: 600; font-size: 0.9rem; padding: 28px 0; display: block; }
+
+    /* --- MEGA MENU STYLES --- */
+    .mega-menu {
+        display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); 
+        background: #fff; padding: 30px 50px; width: auto; min-width: 700px; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-top: 1px solid #eee; z-index: 999;
+        justify-content: space-between; gap: 40px;
+    }
+
+    @media (min-width: 992px) {
+        nav > ul > li:hover .mega-menu { display: flex; }
+        body:has(nav > ul > li:hover) .main-wrapper {
+            filter: blur(8px); opacity: 0.8; transition: all 0.3s ease;
+        }
+    }
+
+    .main-wrapper { transition: all 0.3s ease; padding-top: 80px; }
+
+    /* --- PRODUCT LAYOUT --- */
+    .category-layout {
+        display: flex; max-width: 1400px; margin: 0 auto; padding: 20px 50px 80px 50px;
+        gap: 60px; align-items: flex-start;
+    }
+
+    .product-detail-container { flex-grow: 1; }
+
+    .product-top-section {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 60px;
+    }
+
+    .main-product-image {
+        width: 100%; background: #fff; display: flex; align-items: center; justify-content: center;
+    }
+
+    .product-info-col h1 { font-size: 2rem; font-weight: 400; margin-bottom: 10px; }
+
+    /* DETAIL PRICE STYLING - UPDATED TO BLACK */
+    .detail-price { font-size: 1.5rem; font-weight: 700; color: #000000; margin-bottom: 30px; }
+
+    .info-tabs {
+        display: flex; gap: 40px; margin-bottom: 20px; border-bottom: 1px solid #eee;
+    }
+
+    .tab-link {
+        font-size: 0.9rem; font-weight: 700; color: #00CED1; padding-bottom: 10px; 
+        cursor: pointer; border-bottom: 2px solid #00CED1;
+    }
+    .tab-link.inactive { color: #999; border-bottom: 2px solid transparent; }
+
+    .description-text { font-size: 0.95rem; color: #333; line-height: 1.6; margin-bottom: 25px; }
+
+    .feature-list { list-style: disc; padding-left: 20px; color: #111; line-height: 1.8; margin-bottom: 30px; }
+
+    /* Accordions */
+    .download-accordion { border: 1px solid #000; margin-bottom: 15px; background: #fff; }
+    .accordion-header {
+        padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
+        cursor: pointer; font-weight: 700; font-size: 0.9rem; text-transform: uppercase;
+    }
+    .accordion-content { display: none; padding: 15px 20px; border-top: 1px solid #eee; color: #666; }
+    .accordion-content.open { display: block; }
+
+    /* --- RELATED PRODUCTS --- */
+    .related-section { padding-top: 40px; border-top: 1px solid #eee; }
+    .related-title { font-size: 1.5rem; font-weight: 400; margin-bottom: 40px; text-align: center; }
+    .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+    .related-card { display: flex; flex-direction: column; align-items: center; gap: 15px; }
+    .related-img {
+        background: #f4f4f4; width: 100%; aspect-ratio: 1/1; display: flex; 
+        align-items: center; justify-content: center; border-radius: 8px;
+    }
+
+    @media (max-width: 992px) {
+        .category-layout { flex-direction: column; padding: 20px 30px; }
+        .product-top-section { grid-template-columns: 1fr; }
+        .related-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    </style>
+
+    <div class="main-wrapper">
+        <div class="category-layout">
+            <main class="product-detail-container">
+                <div class="product-top-section">
+                    <div class="main-product-image">
+                        <img src="{{ product.img }}" alt="{{ product.name }}">
+                    </div>
+
+                    <div class="product-info-col">
+                        <h1>{{ product.name }}</h1>
+                        <div class="detail-price">$0.00</div>
+
+                        <div class="info-tabs">
+                            <span class="tab-link">FEATURES</span>
+                            <span class="tab-link inactive">SPECIFICATIONS</span>
+                        </div>
+
+                        <div class="description-text">
+                            Small and powerful runs in this family of {{ product.aperture }} aperture recessed downlight...
+                        </div>
+
+                        <ul class="feature-list">
+                            <li>Adjustable Ring: 360° rotation and a maximum 30° tilt angle</li>
+                            <li>2 in 1 Dimming: 0-10V (Dim to 1%) and TRIAC in one package</li>
+                            <li>COB LED: 4 Fixed CCT 90+ CRI</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="downloads-section">
+                    <div class="download-accordion">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span>SPECSHEET</span><span class="accordion-icon">&#8964;</span>
+                        </div>
+                        <div class="accordion-content"><a href="#">Download {{ product.name }} Specsheet (PDF)</a></div>
+                    </div>
+                </div>
+
+                <div class="related-section">
+                    <div class="related-grid">
+                        <div class="related-card"><div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 1"></div></div>
+                        <div class="related-card"><div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 2"></div></div>
+                        <div class="related-card"><div class="related-img"><img src="https://placehold.co/300x300/e0e0e0/333" alt="Related 3"></div></div>
+                    </div>
+                    <br><h2 class="related-title">You Might Want To Know More</h2>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(element) {
+            element.classList.toggle('active');
+            var content = element.nextElementSibling;
+            content.classList.toggle('open');
+        }
+    </script>
+{% endblock %}
